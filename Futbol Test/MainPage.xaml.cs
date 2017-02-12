@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Futbol_Test.DAL.ApiRest;
+using Futbol_Test.DAL.SQLite;
+using Futbol_Test.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +25,24 @@ namespace Futbol_Test
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        Trivial trivial;
         public MainPage()
         {
             this.InitializeComponent();
+
+            descargarYgrabarTrivial();
+            
+        }
+
+        public async void descargarYgrabarTrivial()
+        {
+            SQLiteManejadora manejadoraSqlite = new SQLiteManejadora();
+            ClienteApi clienteApi = new ClienteApi();
+
+            trivial = await clienteApi.getTrivial();
+
+            manejadoraSqlite.grabarTrivial(trivial);
+            progress.IsActive = false;
         }
     }
 }

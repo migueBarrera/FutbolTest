@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Futbol_Test.Models
 {
-    class Regla
+    public class Regla
     {
         private int id ;
         private string titulo;
@@ -45,7 +45,7 @@ namespace Futbol_Test.Models
             }
         }
 
-        internal List<Pregunta> Preguntas
+        public List<Pregunta> Preguntas
         {
             get
             {

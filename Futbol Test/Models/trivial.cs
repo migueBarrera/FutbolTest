@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Futbol_Test.Models
 {
-    class trivial
+    public class Trivial
     {
         private int id;
         private string version;
@@ -14,7 +14,7 @@ namespace Futbol_Test.Models
         private string descripcion;
         private List<Regla> reglas;
 
-        public trivial(int id, string version, string idioma, string descripcion, List<Regla> reglas)
+        public Trivial(int id, string version, string idioma, string descripcion, List<Regla> reglas)
         {
             Id = id;
             Version = version;
@@ -75,7 +75,7 @@ namespace Futbol_Test.Models
             }
         }
 
-        internal List<Regla> Reglas
+        public List<Regla> Reglas
         {
             get
             {

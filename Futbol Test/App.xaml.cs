@@ -16,6 +16,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Data.Sqlite;
 using Microsoft.Data.Sqlite.Internal;
+using Futbol_Test.DAL.SQLite;
+using Futbol_Test.DAL.ApiRest;
+using Futbol_Test.Models;
+using System.Threading.Tasks;
 
 namespace Futbol_Test
 {
@@ -24,6 +28,7 @@ namespace Futbol_Test
     /// </summary>
     sealed partial class App : Application
     {
+        Trivial trivial;
         /// <summary>
         /// Inicializa el objeto de aplicación Singleton. Esta es la primera línea de código creado
         /// ejecutado y, como tal, es el equivalente lógico de main() o WinMain().
@@ -32,7 +37,15 @@ namespace Futbol_Test
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            SQLiteManejadora manejadoraSqlite = new SQLiteManejadora();
+            manejadoraSqlite.borrarDataBase();
+            manejadoraSqlite.CreateDatabaseIfNotExists();
+
+
+          
         }
+
+       
 
         /// <summary>
         /// Se invoca cuando el usuario final inicia la aplicación normalmente. Se usarán otros puntos

@@ -8,7 +8,7 @@
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Futbol_Test</RootNamespace>
-    <AssemblyName>Futbol Test</AssemblyName>
+    <AssemblyName>FutbolTest</AssemblyName>
     <DefaultLanguage>es-ES</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -95,6 +95,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ApiRest\ClienteApi.cs" />
+    <Compile Include="DAL\ApiRest\MiHttpClient.cs" />
+    <Compile Include="DAL\SQLite\CONTRATO_DB.cs" />
     <Compile Include="DAL\SQLite\SQLiteManejadora.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -102,7 +105,7 @@
     <Compile Include="Models\Pregunta.cs" />
     <Compile Include="Models\Regla.cs" />
     <Compile Include="Models\Respuesta.cs" />
-    <Compile Include="Models\trivial.cs" />
+    <Compile Include="Models\Trivial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +134,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DAL\ApiRest\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

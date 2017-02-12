@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Futbol_Test.Models
 {
-    class Respuesta
+    public class Respuesta
     {
         private int id;
         private int pregunta_id;
