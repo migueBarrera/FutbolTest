@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,59 +28,112 @@ namespace Futbol_Test
     public sealed partial class MainPage : Page
     {
         Trivial trivial;
+        bool hayInternet;
+        ClienteApi clienteApi;
 
         /*
-        Si existe la base de datos
+        
             Si Hay Internet
-               ObtenerTrivial
-               ActualizarBaseDatos
-            Sino Hay Internet
-                Entrar en ActivityMain
-        Sino existe la base de datos
-            Si Hay Internet
-                ObtenerTrivial
-                ActualizarBaseDatos
-            Sino Hay Internet
-                Entrar en AntivityErrorInternet
+                Si existen datos 
+                    Si existen actualizaciones
+                        descargar y grabar trivial
+                    Fin si 
+                Si no existen
+                     descargar y grabar trivial              
+            Si no Hay internet
+                si no existen datos
+                    Ir a Error (Se necesita internet para descargar la base de datos la 1ªvez)
+                Fin_Si
+            Fin-Sino
+
+            Ir a la pantalla de inicio
      */
 
         private SQLiteManejadora manejadora;
-        public MainPage()
+        public  MainPage()
         {
             this.InitializeComponent();
             manejadora = new SQLiteManejadora();
-
-            //    Si existe la base de datos
-            if (manejadora.isDataExists())
+            hayInternet = NetworkInterface.GetIsNetworkAvailable();
+            checkActualizacion();
+            //Si Hay Internet
+            if (hayInternet)
             {
-                //      Si Hay Internet
-                //          ObtenerTrivial
-                //          ActualizarBaseDatos
-                //      Sino Hay Internet
-                //          Entrar en ActivityMain
-                //    Sino existe la base de datos
-            }else { 
-        //        Si Hay Internet
-        //           ObtenerTrivial
-        //           ActualizarBaseDatos
-        //       Sino Hay Internet
-        //           Entrar en AntivityErrorInternet
+                //Si existen datos
+                if (manejadora.isDataExists())
+                {
+                    //Si existen actualizaciones
+                    if(checkActualizacion())
+                    //descargar y grabar trivial
+                    //Si no existen
+                }
+                else
+                {
+                    //descargar y grabar trivial
+                    //descargarYGrabarTrivial();
+                }
+                //Si no Hay internet
+            }
+            else
+            {
+                //si no existen datos
+                if (manejadora.isDataExists() == false)
+                {
+                    //Ir a Error (Se necesita internet para descargar la base de datos la 1ªvez)
+                    //Fin_Si
+                }
+                //Fin - Sino
+            }
 
-            manejadora.isDataExists();
 
-            descargarYgrabarTrivial();
+
+            //        Ir a la pantalla de inicio
+
+            
+
+         
 
         }
 
-        public async void descargarYgrabarTrivial()
+        public async Task descargarYGrabarTrivial()
         {
             SQLiteManejadora manejadoraSqlite = new SQLiteManejadora();
-            ClienteApi clienteApi = new ClienteApi();
 
-            trivial = await clienteApi.getTrivial();
+            trivial = await descargarTrivial();
 
             manejadoraSqlite.grabarTrivial(trivial);
-            progress.IsActive = false;
+            
         }
+
+        public async Task<Trivial> descargarTrivial()
+        {
+            clienteApi = new ClienteApi();
+            return await clienteApi.getTrivial();
+        }
+
+        public async bool checkActualizacion()
+        {
+            bool hayNuevaActualizacion = false;
+            clienteApi = new ClienteApi();
+            manejadora = new SQLiteManejadora();
+            
+            int versionTrivialLocal = manejadora.getVersionTrivial();
+            int versionTrivialInternet = await obtenerVersionTrivialInternet();
+            if (versionTrivialInternet > versionTrivialLocal)
+            {
+                hayNuevaActualizacion = true;
+            }
+
+            return hayNuevaActualizacion;
+        }
+
+        public async Task<int> obtenerVersionTrivialInternet()
+        {
+            int versionTrivialInternet = await clienteApi.getVersiontrivial();
+            return versionTrivialInternet;
+        }
+
+       
+
     }
 }

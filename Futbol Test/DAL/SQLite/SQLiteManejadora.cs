@@ -84,6 +84,33 @@ namespace Futbol_Test.DAL.SQLite
             }
         }
 
+        public int getVersionTrivial()
+        {
+            int version = 0;
+            using (db = new SqliteConnection(PATH_DB))
+            {
+                String consulta = String.Format("Select {0} From {1}",CONTRATO_DB.Trivial_DB.VERSION,CONTRATO_DB.Trivial_DB.TABLE_NAME);
+
+                SqliteCommand comand = new SqliteCommand(consulta, db);
+                try
+                {
+                    SqliteDataReader lector = comand.ExecuteReader();
+
+                    if (lector.HasRows)
+                    {
+                        lector.Read();
+                        version = int.Parse(lector[CONTRATO_DB.Trivial_DB.VERSION].ToString());
+                    }
+                }
+                catch (SqliteException e)
+                {
+
+                    throw;
+                }
+            }
+            return version;
+        }
+
         public void grabarTrivial(Trivial trivial)
         {
             using(db = new SqliteConnection(PATH_DB))
@@ -95,13 +122,11 @@ namespace Futbol_Test.DAL.SQLite
                 {
                     insertarTrivial(trivial, db);
 
-
                     List<Regla> reglas = trivial.Reglas;
                     for (int i = 0; i < reglas.Count; i++)
                     {
                         Regla regla = reglas[i];
                         insertarRegla(regla, db);
-
 
                         for (int j = 0; j < regla.Preguntas.Count; j++)
                         {
