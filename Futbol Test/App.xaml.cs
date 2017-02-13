@@ -39,10 +39,7 @@ namespace Futbol_Test
             this.Suspending += OnSuspending;
             SQLiteManejadora manejadoraSqlite = new SQLiteManejadora();
             manejadoraSqlite.borrarDataBase();
-            manejadoraSqlite.CreateDatabaseIfNotExists();
-
-
-          
+            manejadoraSqlite.CreateDatabaseIfNotExists(); 
         }
 
        

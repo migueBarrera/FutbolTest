@@ -26,12 +26,48 @@ namespace Futbol_Test
     public sealed partial class MainPage : Page
     {
         Trivial trivial;
+
+        /*
+        Si existe la base de datos
+            Si Hay Internet
+               ObtenerTrivial
+               ActualizarBaseDatos
+            Sino Hay Internet
+                Entrar en ActivityMain
+        Sino existe la base de datos
+            Si Hay Internet
+                ObtenerTrivial
+                ActualizarBaseDatos
+            Sino Hay Internet
+                Entrar en AntivityErrorInternet
+     */
+
+        private SQLiteManejadora manejadora;
         public MainPage()
         {
             this.InitializeComponent();
+            manejadora = new SQLiteManejadora();
+
+            //    Si existe la base de datos
+            if (manejadora.isDataExists())
+            {
+                //      Si Hay Internet
+                //          ObtenerTrivial
+                //          ActualizarBaseDatos
+                //      Sino Hay Internet
+                //          Entrar en ActivityMain
+                //    Sino existe la base de datos
+            }else { 
+        //        Si Hay Internet
+        //           ObtenerTrivial
+        //           ActualizarBaseDatos
+        //       Sino Hay Internet
+        //           Entrar en AntivityErrorInternet
+
+            manejadora.isDataExists();
 
             descargarYgrabarTrivial();
-            
+
         }
 
         public async void descargarYgrabarTrivial()

@@ -11,6 +11,8 @@ namespace Futbol_Test.DAL.SQLite
 {
     public class SQLiteManejadora
     {
+
+        static SqliteTransaction miTransaccion;
         private SqliteConnection db;
         private String PATH_DB = "Filename=sqliteFutbolTest.db";
 
@@ -87,33 +89,48 @@ namespace Futbol_Test.DAL.SQLite
             using(db = new SqliteConnection(PATH_DB))
             {
                 db.Open();
-                insertarTrivial(trivial,db);
 
-                List<Regla> reglas = trivial.Reglas;
-                for (int i = 0; i < reglas.Count; i++)
+                 miTransaccion= db.BeginTransaction();
+                try
                 {
-                    Regla regla = reglas[i];
-                    insertarRegla(regla,db);
+                    insertarTrivial(trivial, db);
 
-                    List<Pregunta> preguntas = regla.Preguntas;
-                    for (int j = 0; j < preguntas.Count; j++)
+
+                    List<Regla> reglas = trivial.Reglas;
+                    for (int i = 0; i < reglas.Count; i++)
                     {
-                        Pregunta pregunta = preguntas[j];
-                        insertarPregunta(pregunta,db);
+                        Regla regla = reglas[i];
+                        insertarRegla(regla, db);
 
-                        List<Respuesta> respuestas = pregunta.Respuestas;
-                        for (int k = 0; k < respuestas.Count; k++)
+
+                        for (int j = 0; j < regla.Preguntas.Count; j++)
                         {
-                            Respuesta respuesta = respuestas[k];
-                            insertarRespuesta(respuesta,db);
+                            Pregunta pregunta = regla.Preguntas[j];
+                            insertarPregunta(pregunta, db);
+                        
+                              List<Respuesta> respuestas = pregunta.Respuestas;
+                              for (int k = 0; k < respuestas.Count; k++)
+                              {
+                                  Respuesta respuesta = respuestas[k];
+                                  insertarRespuesta(respuesta,db);
+                              }
                         }
                     }
+
+                    miTransaccion.Commit();
                 }
+                catch (Exception)
+                {
+                    miTransaccion.Rollback();
+                    throw;
+                }
+               
+               
             }
                  
         }
 
-        public void insertarRespuesta(Respuesta respuesta,SqliteConnection db)
+        public  void insertarRespuesta(Respuesta respuesta,SqliteConnection db)
         {
             String cadenainsert = String.Format("Insert into {0}({1},{2},{3},{4}) Values ({5},{6},'{7}','{8}')",
                                     CONTRATO_DB.Respuesta_DB.TABLE_NAME,
@@ -130,7 +147,7 @@ namespace Futbol_Test.DAL.SQLite
            // {
               //  db.Open();
 
-                SqliteCommand insertRespuestaCommand = new SqliteCommand(cadenainsert, db);
+                SqliteCommand insertRespuestaCommand = new SqliteCommand(cadenainsert, db,miTransaccion);
 
                 try
                 {
@@ -159,7 +176,7 @@ namespace Futbol_Test.DAL.SQLite
            // using (db = new SqliteConnection(PATH_DB))
            // {
              //   db.Open();
-                SqliteCommand insertPreguntaCommand = new SqliteCommand(cadenainsert, db);
+                SqliteCommand insertPreguntaCommand = new SqliteCommand(cadenainsert, db,miTransaccion);
 
                 try
                 {
@@ -185,7 +202,7 @@ namespace Futbol_Test.DAL.SQLite
          //   using (db = new SqliteConnection(PATH_DB))
          //   {
           //      db.Open();
-                SqliteCommand insertReglaCommand = new SqliteCommand(cadenainsert, db);
+                SqliteCommand insertReglaCommand = new SqliteCommand(cadenainsert, db,miTransaccion);
 
                 try
                 {
@@ -214,7 +231,7 @@ namespace Futbol_Test.DAL.SQLite
           //  using (db = new SqliteConnection(PATH_DB))
           //  {
            //     db.Open();
-                SqliteCommand insertTrivialCommand = new SqliteCommand(cadenainsert, db);
+                SqliteCommand insertTrivialCommand = new SqliteCommand(cadenainsert, db,miTransaccion);
 
                 try
                 {
@@ -225,7 +242,36 @@ namespace Futbol_Test.DAL.SQLite
                     throw e;
                 }
             }
-       // }
+       
+        public bool isDataExists()
+        {
+            bool existe = false;
+
+            using (db = new SqliteConnection(PATH_DB))
+            {
+                db.Open();
+                String cadena = "Select * from Trivials";
+
+                SqliteCommand comand = new SqliteCommand(cadena, db);
+
+                try
+                {
+                   SqliteDataReader reader = comand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        existe = true;
+                    }
+
+                }
+                catch (SqliteException e)
+                {
+                    existe = false;
+                }
+            }
+
+                return existe;
+        }
 
 
     }
