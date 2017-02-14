@@ -62,6 +62,7 @@ namespace Futbol_Test
         {
             progress.IsActive = false;
 
+            Frame.Navigate(typeof(IndexPage));
         }
     }
 }
