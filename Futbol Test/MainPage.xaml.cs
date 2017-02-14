@@ -1,6 +1,7 @@
 ﻿using Futbol_Test.DAL.ApiRest;
 using Futbol_Test.DAL.SQLite;
 using Futbol_Test.Models;
+using Futbol_Test.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,10 +28,7 @@ namespace Futbol_Test
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        Trivial trivial;
-        bool hayInternet;
-        ClienteApi clienteApi;
-
+       
         /*
         
             Si Hay Internet
@@ -49,91 +47,21 @@ namespace Futbol_Test
             Ir a la pantalla de inicio
      */
 
-        private SQLiteManejadora manejadora;
-        public  MainPage()
+        public MainPage()
         {
             this.InitializeComponent();
-            manejadora = new SQLiteManejadora();
-            hayInternet = NetworkInterface.GetIsNetworkAvailable();
-            checkActualizacion();
-            //Si Hay Internet
-            if (hayInternet)
-            {
-                //Si existen datos
-                if (manejadora.isDataExists())
-                {
-                    //Si existen actualizaciones
-                    if(checkActualizacion())
-                    //descargar y grabar trivial
-                    //Si no existen
-                }
-                else
-                {
-                    //descargar y grabar trivial
-                    //descargarYGrabarTrivial();
-                }
-                //Si no Hay internet
-            }
-            else
-            {
-                //si no existen datos
-                if (manejadora.isDataExists() == false)
-                {
-                    //Ir a Error (Se necesita internet para descargar la base de datos la 1ªvez)
-                    //Fin_Si
-                }
-                //Fin - Sino
-            }
-
-
-
-            //        Ir a la pantalla de inicio
-
+            SQLiteManejadora miMane = new SQLiteManejadora();
             
+            MainUtilities misUtilidades = new MainUtilities(cuandoAcabe);
+            misUtilidades.checkActualizacion();
 
-         
-
-        }
-
-        public async Task descargarYGrabarTrivial()
-        {
-            SQLiteManejadora manejadoraSqlite = new SQLiteManejadora();
-
-            trivial = await descargarTrivial();
-
-            manejadoraSqlite.grabarTrivial(trivial);
             
         }
 
-        public async Task<Trivial> descargarTrivial()
+        public void cuandoAcabe()
         {
-            clienteApi = new ClienteApi();
-            return await clienteApi.getTrivial();
+            progress.IsActive = false;
+
         }
-
-        public async bool checkActualizacion()
-        {
-            bool hayNuevaActualizacion = false;
-            clienteApi = new ClienteApi();
-            manejadora = new SQLiteManejadora();
-            
-            int versionTrivialLocal = manejadora.getVersionTrivial();
-            int versionTrivialInternet = await obtenerVersionTrivialInternet();
-            if (versionTrivialInternet > versionTrivialLocal)
-            {
-                hayNuevaActualizacion = true;
-            }
-
-            return hayNuevaActualizacion;
-        }
-
-        public async Task<int> obtenerVersionTrivialInternet()
-        {
-            int versionTrivialInternet = await clienteApi.getVersiontrivial();
-            return versionTrivialInternet;
-        }
-
-       
-
     }
 }

@@ -107,6 +107,7 @@
     <Compile Include="Models\Respuesta.cs" />
     <Compile Include="Models\Trivial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\MainUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

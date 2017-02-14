@@ -28,7 +28,7 @@ namespace Futbol_Test.DAL.SQLite
             String cadenaPregunta = String.Format("Drop table {0}", CONTRATO_DB.Pregunta_DB.TABLE_NAME);
             String cadenaRespuesta = String.Format("Drop table {0}", CONTRATO_DB.Respuesta_DB.TABLE_NAME);
 
-            SqliteEngine.UseWinSqlite3(); //Configuring library to use SDK version of SQLite
+           // SqliteEngine.UseWinSqlite3(); //Configuring library to use SDK version of SQLite
             using (db = new SqliteConnection(PATH_DB))
             {
                 db.Open();
@@ -89,6 +89,7 @@ namespace Futbol_Test.DAL.SQLite
             int version = 0;
             using (db = new SqliteConnection(PATH_DB))
             {
+                db.Open();
                 String consulta = String.Format("Select {0} From {1}",CONTRATO_DB.Trivial_DB.VERSION,CONTRATO_DB.Trivial_DB.TABLE_NAME);
 
                 SqliteCommand comand = new SqliteCommand(consulta, db);
