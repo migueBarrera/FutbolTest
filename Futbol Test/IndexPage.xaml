@@ -42,7 +42,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
-                <Button Grid.Row="1" Content="Modo Examen" />
+                <Button Grid.Row="1" Content="Modo Examen" Click="Button_Click"/>
             </StackPanel>
 
            

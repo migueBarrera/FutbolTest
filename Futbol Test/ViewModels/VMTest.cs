@@ -10,12 +10,60 @@ namespace Futbol_Test.ViewModels
     public class VMTest : clsVMBase
     {
         #region Atributos
-        private Pregunta[] test;
-        private Pregunta preginta;
-        private Respuesta respuesta1;
-        private Respuesta respuesta2;
-        private Respuesta respuesta3;
-        private 
+       // private Test _test;
+        private Pregunta _preguntaMostrada;
+        private int[] _preguntasCorrectas;
+
+       
         #endregion
+
+        public VMTest()
+        {
+            //Rellenar Test
+
+            //Iniciar preguntas correctas
+            
+        }
+
+       /* public Test Test
+        {
+            get
+            {
+                return _test;
+            }
+
+            set
+            {
+                _test = value;
+            }
+        }*/
+
+        public Pregunta PreguntaMostrada
+        {
+            get
+            {
+                return _preguntaMostrada;
+            }
+
+            set
+            {
+                _preguntaMostrada = value;
+            }
+        }
+
+        public int[] PreguntasCorrectas
+        {
+            get
+            {
+                return _preguntasCorrectas;
+            }
+
+            set
+            {
+                _preguntasCorrectas = value;
+            }
+        }
+
+
     }
 }
