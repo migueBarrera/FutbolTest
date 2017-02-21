@@ -108,12 +108,14 @@
     <Compile Include="Models\Pregunta.cs" />
     <Compile Include="Models\Regla.cs" />
     <Compile Include="Models\Respuesta.cs" />
+    <Compile Include="Models\Test.cs" />
     <Compile Include="Models\Trivial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAleatorioPage.xaml.cs">
       <DependentUpon>TestAleatorioPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\MainUtilities.cs" />
+    <Compile Include="Utilities\TestUtilities.cs" />
     <Compile Include="ViewModels\clsVMBase.cs" />
     <Compile Include="ViewModels\VMTest.cs" />
   </ItemGroup>
