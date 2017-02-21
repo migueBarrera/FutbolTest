@@ -11,7 +11,7 @@ namespace Futbol_Test.Utilities
 {
     public class TestUtilities
     {
-        //TODO, usar una lista negra a la hora de generar los aleatorios, y sólo llamar a la base de datos con los números generados
+        //TODO,Testear!!!
         private String PATH_DB = "Filename=sqliteFutbolTest.db";
 
         /// <summary>
@@ -22,16 +22,17 @@ namespace Futbol_Test.Utilities
         public Test generaTestAleatorio(int numeroPreguntas)
         {
             Test devolver = new Test();
-            int totalPreguntas = 0;
+            int totalPreguntas = 0,aleatorio=0,preguntaID;
+            bool aleatorioEnListaNegra;
+
             List<Pregunta> miLista = new List<Pregunta>();
+            List<Respuesta> respuestas;
+            List<int> listaNegra = new List<int>();
+
+            Random generador = new Random();
             String cadenaCuentaPreguntas = "Select count(*) from " + CONTRATO_DB.Pregunta_DB.TABLE_NAME;
-            String cadenaDevuelvePreguntas = String.Format("Select {0},{1},{2},{3} from {4} where id={5}", CONTRATO_DB.Pregunta_DB.ID,
-                                                            CONTRATO_DB.Pregunta_DB.REGLA_ID,
-                                                            CONTRATO_DB.Pregunta_DB.CONTENIDO,
-                                                            CONTRATO_DB.Pregunta_DB.ANOTACION,
-                                                            CONTRATO_DB.Pregunta_DB.TABLE_NAME,
-                                                            ALEATORIO);
-            SqliteCommand cuentaPreguntas,devuelvePreguntas;
+            
+            SqliteCommand cuentaPreguntas,devuelvePreguntas,devuelveRespuestas;
 
             using (SqliteConnection db = new SqliteConnection(PATH_DB))
             {
@@ -39,20 +40,58 @@ namespace Futbol_Test.Utilities
                 cuentaPreguntas= new SqliteCommand(cadenaCuentaPreguntas, db);
                 totalPreguntas = cuentaPreguntas.ExecuteReader().GetInt32(0);
                 devuelvePreguntas = new SqliteCommand(cadenaCuentaPreguntas, db);
-                SqliteDataReader lector= devuelvePreguntas.ExecuteReader();
-                while(lector.Read())
+                SqliteDataReader lector = devuelvePreguntas.ExecuteReader();
+                for (int i = 0; i < numeroPreguntas; i++)
                 {
-                    //TODO Otro bucle para recoger las respuestas de esa pregunta
-                    Pregunta miPregunta = new Pregunta(lector.GetInt32(0), lector.GetInt32(1), lector.GetString(2), lector.GetString(3),new List<Respuesta>());
+
+                    do
+                    {
+                        aleatorio = generador.Next(0, totalPreguntas);
+                        if (!listaNegra.Contains(aleatorio))
+                        {
+                            aleatorioEnListaNegra = false;
+                            listaNegra.Add(aleatorio);
+                        }else
+                        {
+                            aleatorioEnListaNegra = true;
+                        }
+                    } while (aleatorioEnListaNegra);
+
+
+                    String cadenaDevuelvePreguntas = String.Format("Select {0},{1},{2},{3} from {4} where {0}={5}", 
+                                                            CONTRATO_DB.Pregunta_DB.ID,
+                                                            CONTRATO_DB.Pregunta_DB.REGLA_ID,
+                                                            CONTRATO_DB.Pregunta_DB.CONTENIDO,
+                                                            CONTRATO_DB.Pregunta_DB.ANOTACION,
+                                                            CONTRATO_DB.Pregunta_DB.TABLE_NAME,
+                                                            aleatorio);
+
+                    //TODO Buscar Respuestas
+                    preguntaID = lector.GetInt32(0);
+                    String cadenaDevuelveRespuestas= String.Format("Select {0},{1},{2},{3} from {4} where {1}={5}",
+                                                            CONTRATO_DB.Respuesta_DB.ID,
+                                                            CONTRATO_DB.Respuesta_DB.PREGUNTA_ID,
+                                                            CONTRATO_DB.Respuesta_DB.CONTENIDO,
+                                                            CONTRATO_DB.Respuesta_DB.CORRECTA,
+                                                            CONTRATO_DB.Respuesta_DB.TABLE_NAME,
+                                                            preguntaID);
+
+                    devuelveRespuestas = new SqliteCommand(cadenaDevuelveRespuestas, db);
+                    SqliteDataReader lectorRespuestas= devuelveRespuestas.ExecuteReader();
+                    respuestas = new List<Respuesta>();
+                    while (lectorRespuestas.Read())
+                    {
+                        Respuesta respuesta = new Respuesta(lectorRespuestas.GetInt32(0), lectorRespuestas.GetInt32(1),
+                                                            lectorRespuestas.GetString(2), lectorRespuestas.GetString(3));
+                        respuestas.Add(respuesta);
+                    }
+                    Pregunta miPregunta = new Pregunta(lector.GetInt32(0), lector.GetInt32(1), lector.GetString(2), lector.GetString(3),respuestas);
                 }
+                
+           
             }
             
-            for(int i = 0; i < numeroPreguntas; i++)
-            {
-                Random aleatorio = new Random();
-                //Ponemos totalPreguntas-i, porque en cada iteración, el total de preguntas
-                aleatorio.Next(0, totalPreguntas - i);
-            }
+           
 
             return devolver;
         }
