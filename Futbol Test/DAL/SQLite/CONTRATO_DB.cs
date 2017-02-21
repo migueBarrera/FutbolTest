@@ -39,7 +39,7 @@ namespace Futbol_Test.DAL.SQLite
             public static String TABLE_NAME = "Respuestas";
             public static String ID = "Id";
             public static String CONTENIDO = "Contenido";
-            public static String PREGUNTA_ID = "Regla_id";
+            public static String PREGUNTA_ID = "Pregunta_id";
             public static String CORRECTA = "Correcta";
         }
     }

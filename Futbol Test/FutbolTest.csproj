@@ -115,6 +115,7 @@
       <DependentUpon>TestAleatorioPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\MainUtilities.cs" />
+    <Compile Include="Utilities\TestUtilities.cs" />
     <Compile Include="ViewModels\clsVMBase.cs" />
     <Compile Include="ViewModels\VMTest.cs" />
   </ItemGroup>
