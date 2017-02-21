@@ -10,9 +10,11 @@ namespace Futbol_Test.ViewModels
     public class VMTest : clsVMBase
     {
         #region Atributos
-       // private Test _test;
+        private Test _test;
         private Pregunta _preguntaMostrada;
-        private int[] _preguntasCorrectas;
+        private Respuesta _respuestaSeleccionada;
+        private Boolean _mostrarBoton;
+        
 
        
         #endregion
@@ -25,7 +27,7 @@ namespace Futbol_Test.ViewModels
             
         }
 
-       /* public Test Test
+        public Test Test
         {
             get
             {
@@ -36,7 +38,7 @@ namespace Futbol_Test.ViewModels
             {
                 _test = value;
             }
-        }*/
+        }
 
         public Pregunta PreguntaMostrada
         {
@@ -48,21 +50,50 @@ namespace Futbol_Test.ViewModels
             set
             {
                 _preguntaMostrada = value;
+                NotifyPropertyChanged("PreguntaMostrada");
             }
         }
 
-        public int[] PreguntasCorrectas
+
+
+        public bool MostrarBoton
         {
             get
             {
-                return _preguntasCorrectas;
+                return _mostrarBoton;
             }
 
             set
             {
-                _preguntasCorrectas = value;
+                _mostrarBoton = value;
+                NotifyPropertyChanged("MostrarBoton");
             }
         }
+
+        public Respuesta RespuestaSeleccionada
+        {
+            get
+            {
+                return _respuestaSeleccionada;
+            }
+
+            set
+            {
+                _respuestaSeleccionada = value;
+                if (_respuestaSeleccionada.Correcta.Equals("T"))
+                {
+
+                }
+            }
+        }
+
+
+        #region Metodos
+        public void visibilidadBotonSiguiente(bool indicador)
+        {
+                MostrarBoton = indicador;
+        }
+        #endregion
 
 
     }
