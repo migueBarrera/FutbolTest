@@ -31,6 +31,7 @@ namespace Futbol_Test.Utilities
 
             Random generador = new Random();
             String cadenaCuentaPreguntas = "Select count(*) from " + CONTRATO_DB.Pregunta_DB.TABLE_NAME;
+           
             
             SqliteCommand cuentaPreguntas,devuelvePreguntas,devuelveRespuestas;
 
@@ -38,9 +39,10 @@ namespace Futbol_Test.Utilities
             {
                 db.Open();
                 cuentaPreguntas= new SqliteCommand(cadenaCuentaPreguntas, db);
-                totalPreguntas = cuentaPreguntas.ExecuteReader().GetInt32(0);
-                devuelvePreguntas = new SqliteCommand(cadenaCuentaPreguntas, db);
-                SqliteDataReader lector = devuelvePreguntas.ExecuteReader();
+                SqliteDataReader lectorCuentaPreguntas = cuentaPreguntas.ExecuteReader();
+                lectorCuentaPreguntas.Read();
+                totalPreguntas = Convert.ToInt32(lectorCuentaPreguntas[0]);
+                
                 for (int i = 0; i < numeroPreguntas; i++)
                 {
 
@@ -65,9 +67,11 @@ namespace Futbol_Test.Utilities
                                                             CONTRATO_DB.Pregunta_DB.ANOTACION,
                                                             CONTRATO_DB.Pregunta_DB.TABLE_NAME,
                                                             aleatorio);
-
-                    //TODO Buscar Respuestas
-                    preguntaID = lector.GetInt32(0);
+                    devuelvePreguntas = new SqliteCommand(cadenaDevuelvePreguntas, db);
+                    SqliteDataReader lector = devuelvePreguntas.ExecuteReader();
+                    //TODO Buscar Respuestas 
+                    lector.Read();
+                    preguntaID = Convert.ToInt32(lector[CONTRATO_DB.Pregunta_DB.ID]);
                     String cadenaDevuelveRespuestas= String.Format("Select {0},{1},{2},{3} from {4} where {1}={5}",
                                                             CONTRATO_DB.Respuesta_DB.ID,
                                                             CONTRATO_DB.Respuesta_DB.PREGUNTA_ID,
@@ -81,11 +85,16 @@ namespace Futbol_Test.Utilities
                     respuestas = new List<Respuesta>();
                     while (lectorRespuestas.Read())
                     {
-                        Respuesta respuesta = new Respuesta(lectorRespuestas.GetInt32(0), lectorRespuestas.GetInt32(1),
-                                                            lectorRespuestas.GetString(2), lectorRespuestas.GetString(3));
+                        int idRespuesta = Convert.ToInt32(lectorRespuestas[CONTRATO_DB.Respuesta_DB.ID]);
+                        int idPregunta = Convert.ToInt32(lectorRespuestas[CONTRATO_DB.Respuesta_DB.PREGUNTA_ID]);
+                        String contenido = Convert.ToString(lectorRespuestas[CONTRATO_DB.Respuesta_DB.CONTENIDO]);
+                        String correcta = Convert.ToString(lectorRespuestas[CONTRATO_DB.Respuesta_DB.CORRECTA]);
+                        Respuesta respuesta = new Respuesta(idRespuesta, idPregunta,
+                                                            contenido,correcta);
                         respuestas.Add(respuesta);
                     }
                     Pregunta miPregunta = new Pregunta(lector.GetInt32(0), lector.GetInt32(1), lector.GetString(2), lector.GetString(3),respuestas);
+                    devolver.ListaPreguntas.Add(miPregunta);
                 }
                 
            
