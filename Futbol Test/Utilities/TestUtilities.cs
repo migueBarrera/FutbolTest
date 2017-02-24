@@ -104,5 +104,92 @@ namespace Futbol_Test.Utilities
 
             return devolver;
         }
+
+
+        public List<Regla> obtenerReglas()
+        {
+            List<Regla> listadoReglas = new List<Regla>();
+            SqliteCommand commandReglas;
+            String cadenaConsultaReglas = String.Format("Select * From {0}", CONTRATO_DB.Regla_DB.TABLE_NAME);
+            using (SqliteConnection db = new SqliteConnection(PATH_DB))
+            {
+                db.Open();
+                commandReglas = new SqliteCommand(cadenaConsultaReglas, db);
+                SqliteDataReader lector = commandReglas.ExecuteReader();
+
+                while (lector.Read())
+                {
+                    int id= Convert.ToInt32(lector[CONTRATO_DB.Regla_DB.ID]); ;
+                    String titulo = Convert.ToString(lector[CONTRATO_DB.Regla_DB.TITULO]);
+                    Regla regla = new Regla(id,titulo,null);
+
+                    listadoReglas.Add(regla);
+                }
+
+            }
+
+            return listadoReglas;
+        }
+
+        public List<Test> obtenerListadoTest(int idRegla)
+        {
+            List<Test> listadoTest = new List<Test>();
+            List<Respuesta> listadoRespuestas;
+            List<Pregunta> listadoPreguntas = new List<Pregunta>();
+            Test test;
+            SqliteCommand commandPreguntas,commandRespuestas;
+            String cadenaConsultaPreguntas = String.Format("Select * From {0} Where {1} = {2}", CONTRATO_DB.Pregunta_DB.TABLE_NAME,
+                                                            CONTRATO_DB.Pregunta_DB.REGLA_ID,idRegla);
+            using (SqliteConnection db = new SqliteConnection(PATH_DB))
+            {
+                db.Open();
+                commandPreguntas = new SqliteCommand(cadenaConsultaPreguntas, db);
+                SqliteDataReader lector = commandPreguntas.ExecuteReader();
+
+                while (lector.Read())
+                {
+                    int idPregunta = Convert.ToInt32(lector[CONTRATO_DB.Pregunta_DB.ID]);
+                    String cadenaConsultaRespuestas = String.Format("Select * From {0} Where {1} = {2}", CONTRATO_DB.Respuesta_DB.TABLE_NAME,
+                                                           CONTRATO_DB.Respuesta_DB.PREGUNTA_ID, idPregunta);
+                    commandRespuestas = new SqliteCommand(cadenaConsultaRespuestas, db);
+                    SqliteDataReader lectorRespuestas = commandRespuestas.ExecuteReader();
+
+                    listadoRespuestas = new List<Respuesta>();
+                    while (lectorRespuestas.Read())
+                    {
+                        int idRespuesta = Convert.ToInt32(lectorRespuestas[CONTRATO_DB.Respuesta_DB.ID]);
+                        String contenido = Convert.ToString(lectorRespuestas[CONTRATO_DB.Respuesta_DB.CONTENIDO]);
+                        String correcta = Convert.ToString(lectorRespuestas[CONTRATO_DB.Respuesta_DB.CORRECTA]);
+                        int idPreguntaRespuesta = idPregunta;
+
+                        Respuesta respuesta = new Respuesta(idRespuesta,idPreguntaRespuesta,contenido,correcta);
+                        listadoRespuestas.Add(respuesta);
+                        
+                    }
+
+                    int id = Convert.ToInt32(lector[CONTRATO_DB.Pregunta_DB.ID]);
+                    String contenidoPregunta = Convert.ToString(lector[CONTRATO_DB.Pregunta_DB.CONTENIDO]);
+                    String anotacion = Convert.ToString(lector[CONTRATO_DB.Pregunta_DB.ANOTACION]);
+                    Pregunta pregunta = new Pregunta(id, idRegla, contenidoPregunta, anotacion, listadoRespuestas);
+                    listadoPreguntas.Add(pregunta);
+
+
+                    if(listadoPreguntas.Count == 10)
+                    {
+                        test = new Test();
+                        test.ListaPreguntas = listadoPreguntas;
+                        listadoTest.Add(test);
+                        listadoPreguntas = new List<Pregunta>();
+                    }
+                }
+                test = new Test();
+                test.ListaPreguntas = listadoPreguntas;
+                listadoTest.Add(test);
+
+
+            }
+
+            return listadoTest;
+        }
     }
 }

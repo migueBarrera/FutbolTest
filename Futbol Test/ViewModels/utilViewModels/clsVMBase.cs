@@ -14,6 +14,7 @@ namespace Futbol_Test.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+   
 
     }
 }

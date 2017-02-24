@@ -1,4 +1,6 @@
-﻿using Futbol_Test.Models;
+﻿using Futbol_Test.InterfacesComunicacion;
+using Futbol_Test.Models;
+using Futbol_Test.Pages;
 using Futbol_Test.Utilities;
 using System;
 using System.Collections.Generic;
@@ -16,24 +18,25 @@ namespace Futbol_Test.ViewModels
         private Pregunta _preguntaMostrada;
         private Respuesta _respuestaSeleccionada;
         private DelegateCommand _siguientePreguntaComand;
-        
-        
+        private NavigationInterface _navigationInterface;
 
-       
+
+
         #endregion
 
-        public VMTest()
+        public VMTest(NavigationInterface navigationInterface)
         {
             //Rellenar Testç
-            TestUtilities man = new TestUtilities();
-            this.Test = man.generaTestAleatorio(10);
-            PreguntaMostrada = this.Test.obtenerSiguientePregunta();
+            //TestUtilities man = new TestUtilities();
+            //this.Test = man.generaTestAleatorio(10);
+            //PreguntaMostrada = this.Test.obtenerSiguientePregunta();
             _siguientePreguntaComand = new DelegateCommand(siguientePreguntaComand_executed, siguientePreguntaComand_CanExecuted);
             //Iniciar preguntas correctas
-            
+            _navigationInterface = navigationInterface;
+
         }
 
-    
+
 
         public Test Test
         {
@@ -46,6 +49,9 @@ namespace Futbol_Test.ViewModels
             {
                 _test = value;
                 _test.calcularTotalPreguntas();
+                PreguntaMostrada = _test.obtenerSiguientePregunta();
+
+
             }
         }
 
@@ -65,7 +71,7 @@ namespace Futbol_Test.ViewModels
 
 
 
-    
+
 
         public Respuesta RespuestaSeleccionada
         {
@@ -78,11 +84,11 @@ namespace Futbol_Test.ViewModels
             {
                 _respuestaSeleccionada = value;
 
-                if(_respuestaSeleccionada!= null)
+                if (_respuestaSeleccionada != null)
                 {
                     if (_respuestaSeleccionada.Correcta.Equals("T"))
                     {
-
+                        _test.RespuestasCorrectas++;
                     }
                     else
                     {
@@ -91,8 +97,8 @@ namespace Futbol_Test.ViewModels
                 }
 
                 _siguientePreguntaComand.RaiseCanExecuteChanged();
-                
-                
+
+
             }
         }
 
@@ -115,7 +121,17 @@ namespace Futbol_Test.ViewModels
         #region Command
         private void siguientePreguntaComand_executed()
         {
-            PreguntaMostrada = Test.obtenerSiguientePregunta();
+            var preguntaAMostrar = Test.obtenerSiguientePregunta();
+            if (preguntaAMostrar != null)
+            {
+                PreguntaMostrada = preguntaAMostrar;
+            }
+            else
+            {
+                _navigationInterface.Navigate(typeof(ResultadoTestPage),Test.RespuestasCorrectas);
+                
+            }
+
         }
 
         private bool siguientePreguntaComand_CanExecuted()

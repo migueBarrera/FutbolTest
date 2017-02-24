@@ -20,6 +20,7 @@ using Futbol_Test.DAL.SQLite;
 using Futbol_Test.DAL.ApiRest;
 using Futbol_Test.Models;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 
 namespace Futbol_Test
 {
@@ -62,6 +63,7 @@ namespace Futbol_Test
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
+               
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -70,6 +72,9 @@ namespace Futbol_Test
 
                 // Poner el marco en la ventana actual.
                 Window.Current.Content = rootFrame;
+
+              
+             
             }
 
             if (e.PrelaunchActivated == false)
@@ -109,5 +114,9 @@ namespace Futbol_Test
             //TODO: Guardar el estado de la aplicación y detener toda actividad en segundo plano
             deferral.Complete();
         }
+
+  
+
+
     }
 }

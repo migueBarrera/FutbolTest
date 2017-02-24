@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Futbol_Test.InterfacesComunicacion;
+using Futbol_Test.Models;
+using Futbol_Test.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,11 +23,27 @@ namespace Futbol_Test
     /// <summary>
     /// Una página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
     /// </summary>
-    public sealed partial class TestAleatorioPage : Page
+    public sealed partial class TestPage : Page
     {
-        public TestAleatorioPage()
+        VMTest viewModel;
+        public TestPage()
         {
             this.InitializeComponent();
+            if (viewModel == null)
+            {
+                viewModel = new VMTest(new ImpInterfaceComunicacion());
+                this.DataContext = viewModel;
+            }
+
+
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            Test parameters = (Test)e.Parameter;
+            viewModel.Test = parameters;
         }
     }
 }

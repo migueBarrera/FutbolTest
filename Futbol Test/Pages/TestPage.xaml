@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Futbol_Test.TestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Futbol_Test"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+     xmlns:vm="using:Futbol_Test.ViewModels">
+
+  
+
+    <!--Fila de la pregunta , la respuesta y los botones-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--fila 1 Pregunta-->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="{Binding PreguntaMostrada.Contenido,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,10"/>
+        </StackPanel>
+
+        <!--Fila 2 Respuestas y boton siguiente-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--Columna 1 Listado de respuestas -->
+            <ListView Name="listaRespuestas" ItemsSource="{Binding PreguntaMostrada.Respuestas}" SelectedItem="{Binding RespuestaSeleccionada,Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10,10,10,10" >
+                            <TextBlock Text="{Binding Contenido}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <!--Columna 2 boton siguiente pregunta-->
+            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                <AppBarButton Icon="Forward"  Name="BotonSiguiente" Command="{Binding SiguientePreguntaComand}"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Page>

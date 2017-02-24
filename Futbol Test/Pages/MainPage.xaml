@@ -9,6 +9,5 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ProgressRing Name="progress" IsActive="True"></ProgressRing>
-        <Frame Name="MyFrame"/>
     </Grid>
 </Page>
