@@ -30,7 +30,6 @@ namespace Futbol_Test.Pages
         {
             this.InitializeComponent();
             viewModel = (VMTestOfReglas)DataContext;
-
       
         }
 
@@ -50,6 +49,14 @@ namespace Futbol_Test.Pages
             TestUtilities testUtilities = new TestUtilities();
             List<Test> listadoTest = testUtilities.obtenerListadoTest(parameters.Id);
             viewModel.ListadoTest = listadoTest;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
         }
     }
 }

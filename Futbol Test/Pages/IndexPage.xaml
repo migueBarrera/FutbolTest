@@ -7,42 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Grid >
 
-        <!-- Primera Fila-->
-        <StackPanel Orientation="Horizontal">
+        <Frame Name="MyFrame"  Background="#C8E6C9"/>
 
-        </StackPanel>
-        <Grid >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <RelativePanel>
-                <Button Name="BackButton"
-                    FontFamily="Segoe MDl2 Assets" 
-                    FontSize="36"
-                    Content="&#xE0C4;" 
-                    Click="BackButton_Click"
-                        Visibility="Collapsed"
-                     />
-                <StackPanel RelativePanel.RightOf="BackButton">
-                    <TextBlock Text="Fútbol Test" Margin="5,5,5,5"/>
-                </StackPanel>
-            </RelativePanel>
-           
-            <AppBarButton Grid.Column="2" Icon="More" HorizontalAlignment="Right"/>
-        </Grid>
-
-        <!--Segunda Fila-->
-        <Grid Grid.Row="1">
-            <Frame Name="MyFrame"/>
-        </Grid>
 
     </Grid>
 </Page>

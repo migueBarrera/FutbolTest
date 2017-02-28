@@ -32,13 +32,16 @@ namespace Futbol_Test.Pages
             base.OnNavigatedTo(e);
 
             int parameters = (int)e.Parameter;
-            txtNumero.Text = "Has Acertado " + parameters + " preguntas";
+
+            
+            txtNumero.Text = "Has acertado " + parameters + " preguntas";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
             Frame.Navigate(typeof(MenuPrincipalPage));
+            
         }
     }
 }

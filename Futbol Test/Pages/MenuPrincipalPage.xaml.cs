@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,7 +28,7 @@ namespace Futbol_Test.Pages
         public MenuPrincipalPage()
         {
             this.InitializeComponent();
-
+        
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -44,5 +45,16 @@ namespace Futbol_Test.Pages
             Frame.Navigate(typeof(ReglasPage), litadoReglas);
         }
 
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog showDialog = new MessageDialog("Agradecimientos a : Mi");
+
+            showDialog.Commands.Add(new UICommand("Cerrar") { Id = 0 });
+            showDialog.Title = "Agradecimientos";
+
+            showDialog.DefaultCommandIndex = 0;
+
+            await showDialog.ShowAsync();
+        }
     }
 }

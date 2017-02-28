@@ -14,16 +14,21 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <StackPanel>
+            <AppBarButton Icon="Back" Click="BackButton_Click"></AppBarButton>
+        </StackPanel>
+
         <!--fila 1 Pregunta-->
-        <StackPanel Grid.Row="0">
-            <TextBlock Text="{Binding PreguntaMostrada.Contenido,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,10"/>
+        <StackPanel Grid.Row="1">
+            <TextBlock FontSize="17" Text="{Binding PreguntaMostrada.Contenido,UpdateSourceTrigger=PropertyChanged}" Foreground="OrangeRed" TextWrapping="Wrap" Margin="10,10,10,10"/>
         </StackPanel>
 
         <!--Fila 2 Respuestas y boton siguiente-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -32,12 +37,15 @@
             <!--Columna 1 Listado de respuestas -->
             <ListView Name="listaRespuestas" ItemsSource="{Binding PreguntaMostrada.Respuestas}" SelectedItem="{Binding RespuestaSeleccionada,Mode=TwoWay}">
                 <ListView.ItemTemplate>
+                    
                     <DataTemplate>
-                        <StackPanel Margin="10,10,10,10" >
-                            <TextBlock Text="{Binding Contenido}" TextWrapping="Wrap"/>
+                        <StackPanel Margin="10,10,10,10">
+                            <TextBlock Text="{Binding Contenido}" TextWrapping="Wrap" Foreground="OrangeRed"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+
+            
 
             </ListView>
 

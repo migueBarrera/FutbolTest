@@ -15,25 +15,19 @@ namespace Futbol_Test.ViewModels
     {
         #region Atributos
         private Test _test;
+        public Action funcion { get; set; }
         private Pregunta _preguntaMostrada;
         private Respuesta _respuestaSeleccionada;
         private DelegateCommand _siguientePreguntaComand;
-        private NavigationInterface _navigationInterface;
-
+        public int respuestasCorrectas { get; set; }
 
 
         #endregion
 
-        public VMTest(NavigationInterface navigationInterface)
+        public VMTest(Action action)
         {
-            //Rellenar Testç
-            //TestUtilities man = new TestUtilities();
-            //this.Test = man.generaTestAleatorio(10);
-            //PreguntaMostrada = this.Test.obtenerSiguientePregunta();
             _siguientePreguntaComand = new DelegateCommand(siguientePreguntaComand_executed, siguientePreguntaComand_CanExecuted);
-            //Iniciar preguntas correctas
-            _navigationInterface = navigationInterface;
-
+            this.funcion = action;
         }
 
 
@@ -48,10 +42,8 @@ namespace Futbol_Test.ViewModels
             set
             {
                 _test = value;
-                _test.calcularTotalPreguntas();
-                PreguntaMostrada = _test.obtenerSiguientePregunta();
-
-
+                Test.calcularTotalPreguntas();
+                PreguntaMostrada = Test.obtenerSiguientePregunta();
             }
         }
 
@@ -88,7 +80,7 @@ namespace Futbol_Test.ViewModels
                 {
                     if (_respuestaSeleccionada.Correcta.Equals("T"))
                     {
-                        _test.RespuestasCorrectas++;
+                       Test.RespuestasCorrectas++;
                     }
                     else
                     {
@@ -128,8 +120,9 @@ namespace Futbol_Test.ViewModels
             }
             else
             {
-                _navigationInterface.Navigate(typeof(ResultadoTestPage),Test.RespuestasCorrectas);
-                
+                // _navigationInterface.Navigate(typeof(ResultadoTestPage),Test.RespuestasCorrectas);
+                respuestasCorrectas = Test.RespuestasCorrectas;
+                funcion.Invoke();
             }
 
         }

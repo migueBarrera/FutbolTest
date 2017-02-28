@@ -1,4 +1,5 @@
-﻿using Futbol_Test.Models;
+﻿using Futbol_Test.InterfacesComunicacion;
+using Futbol_Test.Models;
 using Futbol_Test.Utilities;
 using Futbol_Test.ViewModels;
 using System;
@@ -26,6 +27,7 @@ namespace Futbol_Test.Pages
     public sealed partial class ReglasPage : Page
     {
         VMReglas viewModel;
+        
         public ReglasPage()
         {
             this.InitializeComponent();
@@ -47,6 +49,14 @@ namespace Futbol_Test.Pages
            
             Frame.Navigate(typeof(TestOfReglasPage),regla);
             
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
         }
     }
 }

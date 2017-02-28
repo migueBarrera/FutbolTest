@@ -21,6 +21,9 @@ using Futbol_Test.DAL.ApiRest;
 using Futbol_Test.Models;
 using System.Threading.Tasks;
 using Windows.UI.Core;
+using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 
 namespace Futbol_Test
 {
@@ -40,7 +43,9 @@ namespace Futbol_Test
             this.Suspending += OnSuspending;
             SQLiteManejadora manejadoraSqlite = new SQLiteManejadora();
             manejadoraSqlite.borrarDataBase();
-            manejadoraSqlite.CreateDatabaseIfNotExists(); 
+            manejadoraSqlite.CreateDatabaseIfNotExists();
+
+   
         }
 
        
@@ -89,6 +94,32 @@ namespace Futbol_Test
                 // Asegurarse de que la ventana actual está activa.
                 Window.Current.Activate();
             }
+
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            {
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                if (titleBar != null)
+                {
+                    titleBar.ButtonBackgroundColor = Color.FromArgb(255, (byte)76, (byte)175, (byte)80);
+                    titleBar.ButtonForegroundColor = Color.FromArgb(255, (byte)200, (byte)230, (byte)231);
+                    titleBar.BackgroundColor = Color.FromArgb(255, (byte)76, (byte)175, (byte)80);
+                    titleBar.ForegroundColor = Colors.White;
+                    /*titleBar.ButtonBackgroundColor = Colors.Green;
+                    titleBar.ButtonForegroundColor = Colors.Honeydew;
+                    titleBar.BackgroundColor = Colors.Green;
+                    titleBar.ForegroundColor = Colors.White;*/
+                }
+            }
+        }
+        public SolidColorBrush GetSolidColorBrush(string hex)
+        {
+            hex = hex.Replace("#", string.Empty);
+            byte a = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
+            byte r = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
+            byte g = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+            byte b = (byte)(Convert.ToUInt32(hex.Substring(6, 2), 16));
+            SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
+            return myBrush;
         }
 
         /// <summary>

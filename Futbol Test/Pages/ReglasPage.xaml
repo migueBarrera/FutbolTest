@@ -6,18 +6,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:vm="using:Futbol_Test.ViewModels">
+    
+    xmlns:vm="using:Futbol_Test.ViewModels"
+    >
+
+
 
     <Page.DataContext>
         <vm:VMReglas></vm:VMReglas>
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{Binding ListadoReglas}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+    <Grid Background="#C8E6C9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <AppBarButton Icon="Back" Click="BackButton_Click"></AppBarButton>
+        </StackPanel>
+        
+        <ListView Grid.Row="1" ItemsSource="{Binding ListadoReglas}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10,10,10,10" >
-                        <TextBlock Text="{Binding Titulo}" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding Titulo}" Foreground="OrangeRed" TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

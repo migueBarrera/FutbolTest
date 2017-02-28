@@ -100,6 +100,7 @@
     <Compile Include="DAL\SQLite\CONTRATO_DB.cs" />
     <Compile Include="DAL\SQLite\SQLiteManejadora.cs" />
     <Compile Include="InterfacesComunicacion\ImpInterfaceComunicacion.cs" />
+    <Compile Include="InterfacesComunicacion\InterfaceBackButton.cs" />
     <Compile Include="InterfacesComunicacion\NavigationInterface.cs" />
     <Compile Include="Pages\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
@@ -191,6 +192,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Pages\IndexPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

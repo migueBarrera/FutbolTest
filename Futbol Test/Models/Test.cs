@@ -12,7 +12,7 @@ namespace Futbol_Test.Models
         private int id;
         private List<Pregunta> listaPreguntas;
         private int respuestasCorrectas;
-        private static int contador = 0;
+        private  int contador = 0;
         public static int totalPreguntas = 0;
         #endregion
 
@@ -24,6 +24,7 @@ namespace Futbol_Test.Models
             this.listaPreguntas = listaPreguntas;
             this.respuestasCorrectas = respuestasCorrectas;
             totalPreguntas = this.listaPreguntas.Count();
+            this.contador = 0;
         }
         #endregion
 

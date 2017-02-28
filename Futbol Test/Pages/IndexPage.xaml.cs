@@ -26,43 +26,15 @@ namespace Futbol_Test
     /// </summary>
     public sealed partial class IndexPage : Page
     {
+        
         public IndexPage()
         {
 
             this.InitializeComponent();
             MyFrame.Navigate(typeof(MenuPrincipalPage));
 
-            
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MyFrame.CanGoBack)
-            {
-                MyFrame.GoBack();
-            }
-        }
 
-        /*private void MyFrame_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
-        {
-            var frameType = MyFrame.SourcePageType;
-            String nombreFrame = frameType.FullName;
-            
-            switch (nombreFrame) {
-                case "Futbol_Test.Pages.MenuPrincipalPage":
-                    BackButton.Visibility  = Visibility.Collapsed;
-                    break;
-                case "Futbol_Test.Pages.ReglasPagePage":
-                    BackButton.Visibility = Visibility.Visible;
-                    break;
-                case "Futbol_Test.Pages.TestPage":
-                    BackButton.Visibility = Visibility.Collapsed;
-                    break;
-
-            }
-
-            
-
-        }*/
     }
 }

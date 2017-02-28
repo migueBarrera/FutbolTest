@@ -12,12 +12,20 @@
         <vm:VMTestOfReglas/>
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{Binding ListadoTest}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+    <Grid Background="#C8E6C9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <AppBarButton Icon="Back" Click="BackButton_Click"></AppBarButton>
+        </StackPanel>
+        
+        <ListView Grid.Row="1" ItemsSource="{Binding ListadoTest}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10,10,10,10" >
-                        <TextBlock Text="Test" TextWrapping="Wrap"/>
+                        <TextBlock Text="Test" Foreground="OrangeRed" TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

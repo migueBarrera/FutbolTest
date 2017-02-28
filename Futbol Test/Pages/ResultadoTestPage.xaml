@@ -7,22 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="Honeydew">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel>
-            <TextBlock HorizontalAlignment="Center" Text="Aprobado O Suspenso" FontSize="50"/>
+        <StackPanel >
+            <TextBlock Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Name="txtNumero" FontSize="50" TextWrapping="Wrap"/>
         </StackPanel>
-
-        <StackPanel Grid.Row="1">
-            <TextBlock HorizontalAlignment="Center" Name="txtNumero" FontSize="50"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2">
-            <Button Content="Volver al Inicio" Click="Button_Click"/>
+        
+        <StackPanel Grid.Row="1" Margin="20" >
+            <Button HorizontalAlignment="Center" Content="Volver al Inicio" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Page>
