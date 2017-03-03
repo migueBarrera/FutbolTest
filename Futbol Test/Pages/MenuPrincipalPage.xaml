@@ -12,19 +12,21 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Primera Fila-->
         <Grid>
             <AppBarButton Icon="More" FontSize="15" Click="AppBarButton_Click" HorizontalAlignment="Right"/>
         </Grid>
-        
-        
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center" >
-            <Button  Content="Modo Test Individuales" Click="Button_Click_1"/>
+
+        <Image Source="../Assets/SplashScreen.scale-150.png" Stretch="None"/>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center" >
+            <Button  Content="Modo Test por Reglas" Click="Button_Click_1"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Button  Content="Modo Examen" Click="Button_Click"/>
         </StackPanel>
 

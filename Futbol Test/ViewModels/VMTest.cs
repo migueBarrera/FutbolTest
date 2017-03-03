@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace Futbol_Test.ViewModels
 {
@@ -20,6 +22,9 @@ namespace Futbol_Test.ViewModels
         private Respuesta _respuestaSeleccionada;
         private DelegateCommand _siguientePreguntaComand;
         public int respuestasCorrectas { get; set; }
+        private bool visibleBoton;
+        private bool _enabledList;
+
 
 
         #endregion
@@ -28,6 +33,8 @@ namespace Futbol_Test.ViewModels
         {
             _siguientePreguntaComand = new DelegateCommand(siguientePreguntaComand_executed, siguientePreguntaComand_CanExecuted);
             this.funcion = action;
+            EnabledList = true;
+            visibleBoton = false;
         }
 
 
@@ -57,6 +64,8 @@ namespace Futbol_Test.ViewModels
             set
             {
                 _preguntaMostrada = value;
+                EnabledList = true;
+                visibleBoton = false;
                 NotifyPropertyChanged("PreguntaMostrada");
             }
         }
@@ -75,26 +84,14 @@ namespace Futbol_Test.ViewModels
             set
             {
                 _respuestaSeleccionada = value;
+                EnabledList = false;
 
-                if (_respuestaSeleccionada != null)
-                {
-                    if (_respuestaSeleccionada.Correcta.Equals("T"))
-                    {
-                       Test.RespuestasCorrectas++;
-                    }
-                    else
-                    {
-
-                    }
-                }
-
+                visibleBoton = true;
                 _siguientePreguntaComand.RaiseCanExecuteChanged();
 
 
             }
         }
-
-
 
         public DelegateCommand SiguientePreguntaComand
         {
@@ -103,6 +100,21 @@ namespace Futbol_Test.ViewModels
                 return _siguientePreguntaComand;
             }
         }
+
+        public bool EnabledList
+        {
+            get
+            {
+                return _enabledList;
+            }
+
+            set
+            {
+                _enabledList = value;
+                NotifyPropertyChanged("EnabledList");
+            }
+        }
+
 
 
 
@@ -116,11 +128,12 @@ namespace Futbol_Test.ViewModels
             var preguntaAMostrar = Test.obtenerSiguientePregunta();
             if (preguntaAMostrar != null)
             {
+                visibleBoton = false;
                 PreguntaMostrada = preguntaAMostrar;
             }
             else
             {
-                // _navigationInterface.Navigate(typeof(ResultadoTestPage),Test.RespuestasCorrectas);
+                
                 respuestasCorrectas = Test.RespuestasCorrectas;
                 funcion.Invoke();
             }
@@ -131,7 +144,7 @@ namespace Futbol_Test.ViewModels
         {
             bool sePuedePulsarElBoton = false;
 
-            if (RespuestaSeleccionada != null)
+            if (visibleBoton == true)
             {
                 sePuedePulsarElBoton = true;
             }

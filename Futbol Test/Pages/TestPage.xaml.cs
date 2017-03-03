@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -70,7 +71,50 @@ namespace Futbol_Test
                     Frame.GoBack();
                 }
             }
-           
+
+        }
+
+        private void listaRespuestas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var itemModelo = e.AddedItems.FirstOrDefault();
+            if (itemModelo != null)
+            {
+                var respuestaSeleccionada = e.AddedItems.FirstOrDefault() as Respuesta;
+                ListViewItem item = listaRespuestas.ContainerFromItem(itemModelo) as ListViewItem;
+
+                if (respuestaSeleccionada.Correcta.Equals("T"))
+                {
+                    item.Background = new SolidColorBrush(Colors.Green);
+                    viewModel.Test.RespuestasCorrectas++;
+                }
+                else
+                {
+                    item.Background = new SolidColorBrush(Colors.Red);
+                    var ListItemModeloCorrecta = listaRespuestas.Items;
+                    ListViewItem itemCorrecta =  obtenerLaCorrecta(ListItemModeloCorrecta);
+                    itemCorrecta.Background = new SolidColorBrush(Colors.Green);
+                }
+
+                listaRespuestas.SelectedIndex = -1;
+                
+                
+            }
+            
+        }
+
+        private ListViewItem obtenerLaCorrecta(ItemCollection listado)
+        {
+            ListViewItem item = null;
+            for (int i =0;i<listado.Count;i++)
+            {
+                Respuesta r = listado[i] as Respuesta;
+                if(r.Correcta == "T")
+                {
+                    var itemModelo = listado[i];
+                    item = listaRespuestas.ContainerFromItem(itemModelo) as ListViewItem;
+                }
+            }
+            return item;
         }
     }
 }

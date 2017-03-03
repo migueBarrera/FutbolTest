@@ -34,20 +34,34 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--Columna 1 Listado de respuestas -->
-            <ListView Name="listaRespuestas" ItemsSource="{Binding PreguntaMostrada.Respuestas}" SelectedItem="{Binding RespuestaSeleccionada,Mode=TwoWay}">
-                <ListView.ItemTemplate>
-                    
-                    <DataTemplate>
-                        <StackPanel Margin="10,10,10,10">
-                            <TextBlock Text="{Binding Contenido}" TextWrapping="Wrap" Foreground="OrangeRed"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            
+                <StackPanel Height="1" Background="Black" Orientation="Horizontal" Grid.Row="0">
 
-            </ListView>
+                </StackPanel>
+                <!--Columna 1 Listado de respuestas -->
+                <ListView Grid.Row="1" Name="listaRespuestas" IsEnabled="{Binding EnabledList}" 
+                      SelectionChanged="listaRespuestas_SelectionChanged" ItemsSource="{Binding PreguntaMostrada.Respuestas}" SelectedItem="{Binding RespuestaSeleccionada,Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate>
+                            <StackPanel Margin="10,10,10,10" Background="{Binding }" Orientation="Horizontal">
+                                <TextBlock Text="-"/>
+                                <TextBlock Text="{Binding Contenido}" TextWrapping="Wrap" Foreground="OrangeRed"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+
+
+                </ListView>
+            </Grid>
+
+           
 
             <!--Columna 2 boton siguiente pregunta-->
             <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
