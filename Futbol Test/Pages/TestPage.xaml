@@ -24,7 +24,7 @@
 
         <!--fila 1 Pregunta-->
         <StackPanel Grid.Row="1">
-            <TextBlock FontSize="17" Text="{Binding PreguntaMostrada.Contenido,UpdateSourceTrigger=PropertyChanged}" Foreground="OrangeRed" TextWrapping="Wrap" Margin="10,10,10,10"/>
+            <TextBlock FontSize="19" Text="{Binding PreguntaMostrada.Contenido,UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontWeight="SemiBold"  Foreground="Blue" TextWrapping="Wrap" Margin="10,10,10,10"/>
         </StackPanel>
 
         <!--Fila 2 Respuestas y boton siguiente-->
@@ -49,10 +49,15 @@
                     <ListView.ItemTemplate>
 
                         <DataTemplate>
-                            <StackPanel Margin="10,10,10,10" Background="{Binding }" Orientation="Horizontal">
-                                <TextBlock Text="-"/>
-                                <TextBlock Text="{Binding Contenido}" TextWrapping="Wrap" Foreground="OrangeRed"/>
-                            </StackPanel>
+
+                            <TextBlock Name="txtListadoRespuestas"
+                                           Margin="15,15,15,15"
+                                           Text="{Binding Contenido}" 
+                                           TextWrapping="Wrap"  
+                                           FontSize="17" 
+                                           FontWeight="SemiBold" 
+                                           FontStyle="Italic" 
+                                           Foreground="Blue"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
 

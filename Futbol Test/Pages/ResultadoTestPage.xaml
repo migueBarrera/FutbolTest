@@ -7,15 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="Honeydew">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="#C8E6C9">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel >
-            <TextBlock Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Name="txtNumero" FontSize="50" TextWrapping="Wrap"/>
-        </StackPanel>
+        <RelativePanel >
+            <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="10"  VerticalAlignment="Center" Name="txtNumero" FontSize="50" TextWrapping="Wrap"/>
+        </RelativePanel>
         
         <StackPanel Grid.Row="1" Margin="20" >
             <Button HorizontalAlignment="Center" Content="Volver al Inicio" Click="Button_Click"/>

@@ -28,8 +28,9 @@
         <ListView Grid.Row="1" ItemsSource="{Binding ListadoReglas}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="10,10,10,10" >
-                        <TextBlock Text="{Binding Titulo}" Foreground="OrangeRed" TextWrapping="Wrap"/>
+                    <StackPanel Margin="10,10,10,10"  Orientation="Horizontal">
+                        <TextBlock Text="{Binding Id}" Margin="10,0" FontWeight="SemiBold" Foreground="OrangeRed" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding Titulo}" FontWeight="SemiBold" Foreground="OrangeRed" TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

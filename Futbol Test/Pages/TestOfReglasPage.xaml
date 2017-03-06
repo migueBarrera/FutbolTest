@@ -25,7 +25,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10,10,10,10" >
-                        <TextBlock Text="Test" Foreground="OrangeRed" TextWrapping="Wrap"/>
+                        <TextBlock Text="Test"  FontWeight="SemiBold" Foreground="OrangeRed" TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

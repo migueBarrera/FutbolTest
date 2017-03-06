@@ -85,14 +85,22 @@ namespace Futbol_Test
                 if (respuestaSeleccionada.Correcta.Equals("T"))
                 {
                     item.Background = new SolidColorBrush(Colors.Green);
+                    item.FontStyle = Windows.UI.Text.FontStyle.Oblique;
+                    item.Foreground = new SolidColorBrush(Colors.White);
+                    //item.Background.Opacity = 0.7;
                     viewModel.Test.RespuestasCorrectas++;
                 }
                 else
                 {
                     item.Background = new SolidColorBrush(Colors.Red);
+                    item.FontStyle = Windows.UI.Text.FontStyle.Oblique;
                     var ListItemModeloCorrecta = listaRespuestas.Items;
                     ListViewItem itemCorrecta =  obtenerLaCorrecta(ListItemModeloCorrecta);
                     itemCorrecta.Background = new SolidColorBrush(Colors.Green);
+                    itemCorrecta.FontStyle = Windows.UI.Text.FontStyle.Oblique;
+                    //item.Background.Opacity = 0.7;
+
+
                 }
 
                 listaRespuestas.SelectedIndex = -1;
