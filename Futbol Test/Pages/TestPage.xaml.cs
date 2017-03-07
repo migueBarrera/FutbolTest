@@ -38,10 +38,19 @@ namespace Futbol_Test
 
         }
 
+        /// <summary>
+        /// Funcion que se le pasa por parametro al viewModel para que el viewModel la llame desde alli,
+        /// Es necesario esto porque no habia forma de cambiar el frame en el que estaba contenido
+        /// </summary>
         public void funcion()
         {
             Frame.Navigate(typeof(ResultadoTestPage), viewModel.respuestasCorrectas);
         }
+
+        /// <summary>
+        /// Metodo que se llama cuando se navega desde otra page
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -51,6 +60,11 @@ namespace Futbol_Test
 
         }
 
+        /// <summary>
+        /// Funcion para el boton back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MessageDialog showDialog = new MessageDialog("Si sale del modo Test se perderan las preguntas respondidas");

@@ -18,17 +18,17 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Primera Fila-->
+        <!--Primera Fila-->
         <Grid>
             <AppBarButton Icon="More" FontSize="15" Click="AppBarButton_Click" HorizontalAlignment="Right"/>
         </Grid>
 
-        <Image Source="../Assets/SplashScreen.scale-150.png" Stretch="None"/>
+        <Image Grid.Row="1" Source="../Assets/SplashScreen.scale-150.png" Stretch="None"/>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center" >
             <Button  Content="Modo Test por Reglas" Click="Button_Click_1"/>
@@ -36,9 +36,24 @@
 
         <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Button  Content="Modo Examen" Click="Button_Click"/>
+    </StackPanel>
+
+
+    </Grid> 
+
+   <!--<StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <AppBarButton Icon="More" FontSize="15" Click="AppBarButton_Click" HorizontalAlignment="Right"/>
         </StackPanel>
-
-
-    </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Image Grid.Row="1" Source="../Assets/SplashScreen.scale-100.png"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button  Content="Modo Test por Reglas" HorizontalAlignment="Center" Click="Button_Click_1"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Modo Examen" Click="Button_Click"/>
+        </StackPanel>
+    </StackPanel> -->
 
 </Page>

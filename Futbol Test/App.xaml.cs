@@ -45,7 +45,9 @@ namespace Futbol_Test
             manejadoraSqlite.borrarDataBase();
             manejadoraSqlite.CreateDatabaseIfNotExists();
 
-   
+            // ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(200, 200));
+           // ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            //ApplicationView.PreferredLaunchViewSize = new Size(800, 800);
         }
 
        
